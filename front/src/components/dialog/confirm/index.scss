@@ -1,0 +1,91 @@
+.dialog-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .dialog-container {
+        background: white;
+        border-radius: 8px;
+        width: 400px;
+        max-width: 90%;
+        box-shadow: 2px 2px 8px #00000099;
+        animation: fadeIn 0.3s ease-in-out;
+
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #ddd;
+
+            h3 {
+                margin: 0;
+                font-size: 18px;
+            }
+
+            .dialog-close {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .dialog-content {
+            padding: 16px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 16px;
+            border-top: 1px solid #ddd;
+
+            .dialog-button {
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+
+                transition: 0.3s ease;
+    
+                &.cancel {
+                    background: #f5f5f5;
+                    color: #333;
+                }
+    
+                &.confirm {
+                    background: #007bff;
+                    color: white;
+                }
+    
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

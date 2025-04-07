@@ -1,0 +1,37 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+
+        .profile-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    }
+
+    .profile-edit {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        max-width: 450px;
+        .profile-info-item {
+            width: 100%;
+
+            .profile-info-label {
+                font-size: 18px;
+                font-weight: bold;
+            }
+    
+            .profile-info-value {
+                width: 100%;
+                font-size: 16px;
+                margin-top: 5px;
+            }
+        }
+    }
+}
