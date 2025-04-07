@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### AAP KEYS ###
-app.key
-app.key.pub
+# app.key
+# app.key.pub
