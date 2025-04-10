@@ -1,0 +1,25 @@
+.users-box {
+    width: 95%;
+    margin: 0 auto;
+
+    .icon-button {
+        margin: 0 5px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        color: #5f5f5f;
+        font-size: 20px;
+        transition: color 0.3s ease;
+        
+        svg {
+            transition: transform 0.3s ease;
+        }
+        &:hover {
+            color: #2b2b2b;
+            
+            svg {
+                transform: rotate(90deg);
+            }
+        }
+    }
+}

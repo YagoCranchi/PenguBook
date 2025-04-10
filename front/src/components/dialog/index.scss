@@ -10,15 +10,14 @@
     align-items: center;
     z-index: 1000;
 
-    .dialog-container {
+    .dialog {
         background: white;
         border-radius: 8px;
-        width: 400px;
         max-width: 90%;
         box-shadow: 2px 2px 8px #00000099;
         animation: fadeIn 0.3s ease-in-out;
 
-        .dialog-header {
+        &-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,7 +29,7 @@
                 font-size: 18px;
             }
 
-            .dialog-close {
+            .close {
                 background: none;
                 border: none;
                 font-size: 20px;
@@ -38,13 +37,15 @@
             }
         }
 
-        .dialog-content {
+        &-content {
             padding: 16px;
             font-size: 16px;
             color: #333;
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
         }
 
-        .dialog-actions {
+        &-actions {
             display: flex;
             justify-content: flex-end;
             gap: 8px;
@@ -57,23 +58,43 @@
                 border-radius: 4px;
                 cursor: pointer;
                 font-size: 14px;
-
                 transition: 0.3s ease;
     
                 &.cancel {
                     background: #f5f5f5;
                     color: #333;
+                    flex: 1;
                 }
     
                 &.confirm {
                     background: #007bff;
                     color: white;
+                    flex: 1;
                 }
     
                 &:hover {
                     opacity: 0.9;
                 }
             }
+        }
+
+        &-footer {
+            border-top: 1px solid #ddd;
+            box-shadow: 0px -2px 8px #0000001a;
+            padding: 16px;
+        }
+
+        &.lg {
+            width: 95%;
+            max-width: 1600px;
+        }
+        &.md {
+            width: 95%;
+            max-width: 980px;
+        }
+        &.sm {
+            width: 95%;
+            max-width: 600px;
         }
     }
 }

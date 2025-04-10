@@ -24,6 +24,7 @@ import github.yagocranchi.reservas.utils.ValidationError;
 import java.util.ArrayList;
 import java.util.UUID;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
@@ -155,4 +156,51 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @PutMapping("/user/update/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @Transactional
+    public ResponseEntity<List<ValidationError>> updateUserByAdmin(
+        @PathVariable UUID id,
+        @RequestBody UpdateUserDto dto) {
+
+        List<ValidationError> errors = new ArrayList<>();
+
+        var userOpt = userRepository.findById(id);
+
+        if (userOpt.isEmpty()) {
+            errors.add(new ValidationError(0, "User not found."));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+        }
+
+        var user = userOpt.get();
+
+        if (dto.getEmail() != null && !dto.getEmail().equals(user.getEmail())) {
+            var existingUser = userRepository.findByEmail(dto.getEmail());
+            if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
+                errors.add(new ValidationError(1, "Email is already in use."));
+            } else {
+                user.setEmail(dto.getEmail());
+            }
+        }
+
+        if (dto.getPhone() != null && !dto.getPhone().equals(user.getPhone())) {
+            var existingUser = userRepository.findByPhone(dto.getPhone());
+            if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
+                errors.add(new ValidationError(2, "Phone number is already in use."));
+            } else {
+                user.setPhone(dto.getPhone());
+            }
+        }
+
+        if (!errors.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        }
+
+        user.setName(dto.getName());
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

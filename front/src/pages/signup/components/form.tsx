@@ -59,10 +59,10 @@ const SignupForm = () => {
 
     return (
         <form onSubmit={handleSignupForm} className="login-form">
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="name">Name: </label>
                 <input 
-                    type="name"
+                    type="text"
                     id="name"
                     value={name}
                     max={50}
@@ -70,7 +70,7 @@ const SignupForm = () => {
                     className={invalidFields.name ? "input-error" : ""}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="email">Email: </label>
                 <input
                     type="text"
@@ -81,7 +81,7 @@ const SignupForm = () => {
                     className={invalidFields.email ? "input-error" : ""}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="cpf">CPF: </label>
                 <input
                     type="text"
@@ -92,7 +92,7 @@ const SignupForm = () => {
                     className={invalidFields.cpf ? "input-error" : ""}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="phone">Phone: </label>
                 <input
                     type="text"
@@ -103,7 +103,7 @@ const SignupForm = () => {
                     className={invalidFields.phone ? "input-error" : ""}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="password">Password: </label>
                 <input
                     type="password"
@@ -114,7 +114,7 @@ const SignupForm = () => {
                     className={invalidFields.password ? "input-error" : ""}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group input-label">
                 <label htmlFor="passwordConfirm">Confirm your Password: </label>
                 <input
                     type="password"

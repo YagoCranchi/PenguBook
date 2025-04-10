@@ -1,10 +1,11 @@
 import React from "react";
 
-import "./index.scss";
+import "../index.scss";
 
 interface DialogProps {
     isOpen: boolean;
     title?: string;
+    className?: string;
     content?: string | React.ReactNode;
     onClose: () => void;
     onConfirm?: () => void;
@@ -13,10 +14,11 @@ interface DialogProps {
     showCancelButton?: boolean;
 }
 
-const Dialog: React.FC<DialogProps> = ({
+const DialogConfirm: React.FC<DialogProps> = ({
     isOpen,
     title,
-    content = "Dialog Content",
+    className,
+    content = "",
     onClose,
     onConfirm,
     confirmText = "Confirm",
@@ -27,16 +29,18 @@ const Dialog: React.FC<DialogProps> = ({
 
     return (
         <div className="dialog-overlay">
-            <div className="dialog-container">
+            <div className={className ? `dialog ${className}` : "dialog"}>
                 {title && (
                     <div className="dialog-header">
                         <h3>{title}</h3>
-                        <button className="btn dialog-close" onClick={onClose}>
+                        <button className="btn close" onClick={onClose}>
                             &times;
                         </button>
                     </div>
                 )}
-                <div className="dialog-content">{content}</div>
+                <div className="dialog-content">
+                    {content}
+                </div>
                 <div className="dialog-actions">
                     {showCancelButton && (
                         <button className="btn dialog-button cancel" onClick={onClose}>
@@ -54,4 +58,4 @@ const Dialog: React.FC<DialogProps> = ({
     );
 };
 
-export default Dialog;
+export default DialogConfirm;

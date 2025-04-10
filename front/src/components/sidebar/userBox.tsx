@@ -6,7 +6,7 @@ import { mdiLogout } from "@mdi/js";
 import useLogoff from "../../hooks/useLogoff";
 import useAuth from "../../hooks/useAuth";
 
-import Dialog from "../dialog/confirm";
+import DialogConfirm from "../dialog/confirm";
 
 const SideBarUserBox = () => {
     const navigate = useNavigate();
@@ -16,7 +16,6 @@ const SideBarUserBox = () => {
 
     const userInfos = auth?.userInfo || null;
     const userName = userInfos?.name || "";
-    const userRole = userInfos?.roleName || null;
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -41,7 +40,7 @@ const SideBarUserBox = () => {
                 </button>
             </div>
 
-            <Dialog
+            <DialogConfirm
                 isOpen={isDialogOpen}
                 content="Are you sure you want to log out?"
                 onClose={handleCloseDialog}
