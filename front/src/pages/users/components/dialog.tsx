@@ -10,12 +10,15 @@ interface UsersDialogProps {
     isOpen: boolean;
     onClose: () => void;
     user: {
-        Id: string;
-        Name: string;
-        Email: string;
-        CPF: string;
-        Phone: string;
-        Role: string;
+        userId: string;
+        name: string;
+        email: string;
+        cpf: string;
+        phone: string;
+        roles: {
+            roleId: number;
+            name: string;
+        }[];
     } | null;
     onUpdate: () => void;
 }
@@ -32,11 +35,11 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
 
     useEffect(() => {
         if (user) {
-            setName(user.Name);
-            setEmail(user.Email);
-            setCpf(user.CPF);
-            setPhone(user.Phone);
-            setRole(user.Role);
+            setName(user.name || '');
+            setEmail(user.email || '');
+            setCpf(user.cpf || '');
+            setPhone(user.phone || '');
+            setRole(user.roles?.[0]?.name || '');
         }
     }, [user]);
 
@@ -51,7 +54,7 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
         const controller = new AbortController();
 
         try {
-            await axiosPrivate.put(`/user/update/${user?.Id}`, 
+            await axiosPrivate.put(`/user/update/${user?.userId}`, 
                 {
                     name,
                     email,
@@ -67,8 +70,11 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
             if (!err?.response) {
                 toast.error('No server response');
             } else {
-                toast.error('Request failed');
+                for (let i = 0; i < err.response.data.length; i++) {
+                    toast.error(err.response.data[i].message);
+                }
             }
+            
         }
     };
 

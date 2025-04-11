@@ -128,8 +128,6 @@ public class UserController {
 
             if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
                 errors.add(new ValidationError(1, "Email is already in use."));
-            } else {
-                user.setEmail(dto.getEmail());
             }
         }
 
@@ -138,8 +136,6 @@ public class UserController {
 
             if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
                 errors.add(new ValidationError(2, "Phone number is already in use."));
-            } else {
-                user.setPhone(dto.getPhone());
             }
         }
 
@@ -150,6 +146,7 @@ public class UserController {
         }
 
         user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
 
         userRepository.save(user);
@@ -174,30 +171,37 @@ public class UserController {
         }
 
         var user = userOpt.get();
-
+        
+        if (dto.getName() != null && !dto.getName().equals(user.getName())) {
+            var existingUser = userRepository.findByName(dto.getName());
+            if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
+                errors.add(new ValidationError(1, "Name is already in use."));
+            }
+        }
+        
         if (dto.getEmail() != null && !dto.getEmail().equals(user.getEmail())) {
             var existingUser = userRepository.findByEmail(dto.getEmail());
             if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
-                errors.add(new ValidationError(1, "Email is already in use."));
-            } else {
-                user.setEmail(dto.getEmail());
+                errors.add(new ValidationError(2, "Email is already in use."));
             }
         }
 
         if (dto.getPhone() != null && !dto.getPhone().equals(user.getPhone())) {
             var existingUser = userRepository.findByPhone(dto.getPhone());
             if (existingUser.isPresent() && !existingUser.get().getUserId().equals(user.getUserId())) {
-                errors.add(new ValidationError(2, "Phone number is already in use."));
-            } else {
-                user.setPhone(dto.getPhone());
+                errors.add(new ValidationError(3, "Phone number is already in use."));
             }
         }
 
         if (!errors.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errors);
         }
 
         user.setName(dto.getName());
+        user.setPhone(dto.getPhone());
+        user.setEmail(dto.getEmail());
         userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

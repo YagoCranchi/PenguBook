@@ -47,7 +47,9 @@ const SignupForm = () => {
             if (!err?.response) {
                 toast.error('No server response');
             } else {
-                toast.error('Signup failed');
+                for (let i = 0; i < err.response.data.length; i++) {
+                    toast.error(err.response.data[i].message);
+                }
             }
         }
     };
