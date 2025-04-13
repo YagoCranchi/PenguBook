@@ -1,8 +1,8 @@
-package github.yagocranchi.reservas.repository;
+package github.yagocranchi.pengubook.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import github.yagocranchi.reservas.entities.User;
+import github.yagocranchi.pengubook.entities.User;
 
 import java.util.Optional;
 import java.util.UUID;

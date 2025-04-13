@@ -1,4 +1,4 @@
-package github.yagocranchi.reservas.controller;
+package github.yagocranchi.pengubook.controller;
 
 
 import jakarta.servlet.http.Cookie;
@@ -8,11 +8,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.*;
-import github.yagocranchi.reservas.controller.dto.LoginRequest;
-import github.yagocranchi.reservas.controller.dto.LoginResponse;
-import github.yagocranchi.reservas.entities.Role;
-import github.yagocranchi.reservas.repository.UserRepository;
-import github.yagocranchi.reservas.entities.User;
+import github.yagocranchi.pengubook.controller.dto.LoginRequest;
+import github.yagocranchi.pengubook.controller.dto.LoginResponse;
+import github.yagocranchi.pengubook.entities.Role;
+import github.yagocranchi.pengubook.repository.UserRepository;
+import github.yagocranchi.pengubook.entities.User;
 
 import java.time.Instant;
 import java.util.Optional;

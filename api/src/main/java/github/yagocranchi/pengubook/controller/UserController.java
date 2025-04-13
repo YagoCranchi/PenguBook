@@ -1,4 +1,4 @@
-package github.yagocranchi.reservas.controller;
+package github.yagocranchi.pengubook.controller;
 
 import java.util.Set;
 import java.util.List;
@@ -12,22 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import github.yagocranchi.reservas.entities.Role;
-import github.yagocranchi.reservas.entities.User;
-import github.yagocranchi.reservas.repository.RoleRepository;
-import github.yagocranchi.reservas.repository.UserRepository;
-import github.yagocranchi.reservas.controller.dto.CreateUserDto;
-import github.yagocranchi.reservas.controller.dto.GetUserDto;
-import github.yagocranchi.reservas.controller.dto.UpdateUserDto;
-import github.yagocranchi.reservas.utils.ValidationError;
-import java.util.ArrayList;
-import java.util.UUID;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import github.yagocranchi.pengubook.entities.Role;
+import github.yagocranchi.pengubook.entities.User;
+import github.yagocranchi.pengubook.repository.RoleRepository;
+import github.yagocranchi.pengubook.repository.UserRepository;
+import github.yagocranchi.pengubook.controller.dto.CreateUserDto;
+import github.yagocranchi.pengubook.controller.dto.GetUserDto;
+import github.yagocranchi.pengubook.controller.dto.UpdateUserDto;
+import github.yagocranchi.pengubook.utils.ValidationError;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -35,14 +38,14 @@ public class UserController {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userRepository,
-        RoleRepository roleRepository,
-        BCryptPasswordEncoder passwordEncoder) {
+                          RoleRepository roleRepository,
+                          BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public ResponseEntity<GetUserDto> userInfo(JwtAuthenticationToken token) {
         return userRepository.findById(UUID.fromString(token.getName()))
             .map(user -> {
@@ -64,14 +67,14 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<User>> listUsers() {
         var users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/create")
     @Transactional
     public ResponseEntity<List<ValidationError>> newUser(@RequestBody CreateUserDto dto) {
         List<ValidationError> errors = new ArrayList<>();
@@ -109,7 +112,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/user/update")
+    @PutMapping("/update")
     @Transactional
     public ResponseEntity<List<ValidationError>> updateUser(@RequestBody UpdateUserDto dto, JwtAuthenticationToken token) {
         List<ValidationError> errors = new ArrayList<>();
@@ -154,7 +157,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/user/update/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Transactional
     public ResponseEntity<List<ValidationError>> updateUserByAdmin(
@@ -206,5 +209,4 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

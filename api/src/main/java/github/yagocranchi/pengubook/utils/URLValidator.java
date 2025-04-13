@@ -1,4 +1,4 @@
-package github.yagocranchi.reservas.utils;
+package github.yagocranchi.pengubook.utils;
 
 import java.net.HttpURLConnection;
 import java.util.regex.Pattern;

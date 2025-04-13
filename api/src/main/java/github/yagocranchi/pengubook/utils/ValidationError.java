@@ -1,4 +1,4 @@
-package github.yagocranchi.reservas.utils;
+package github.yagocranchi.pengubook.utils;
 
 public class ValidationError {
     private int code;

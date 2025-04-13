@@ -1,5 +1,4 @@
-package github.yagocranchi.reservas.controller.dto;
-
+package github.yagocranchi.pengubook.controller.dto;
 
 public record CreateUserDto(String name,
                             String password,

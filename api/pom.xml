@@ -12,7 +12,7 @@
 	<artifactId>pengubook</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pengubook-api</name>
-	<description>API do sistema de reservas</description>
+	<description>API</description>
 	<url/>
 	<licenses>
 		<license/>

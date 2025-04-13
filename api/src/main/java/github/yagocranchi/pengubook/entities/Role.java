@@ -1,4 +1,4 @@
-package github.yagocranchi.reservas.entities;
+package github.yagocranchi.pengubook.entities;
 
 import jakarta.persistence.*;
 

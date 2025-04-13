@@ -1,9 +1,9 @@
-package github.yagocranchi.reservas.config;
+package github.yagocranchi.pengubook.config;
 
-import github.yagocranchi.reservas.repository.RoleRepository;
-import github.yagocranchi.reservas.repository.UserRepository;
-import github.yagocranchi.reservas.entities.Role;
-import github.yagocranchi.reservas.entities.User;
+import github.yagocranchi.pengubook.repository.RoleRepository;
+import github.yagocranchi.pengubook.repository.UserRepository;
+import github.yagocranchi.pengubook.entities.Role;
+import github.yagocranchi.pengubook.entities.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
