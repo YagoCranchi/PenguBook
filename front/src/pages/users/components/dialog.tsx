@@ -79,7 +79,7 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
     };
 
     return (
-        <Dialog isOpen={isOpen} title="Detalhes do Usuário" onClose={onClose} className="sm">
+        <Dialog isOpen={isOpen} title="User Datails" onClose={onClose} className="sm">
             <DialogBody>
                 <div className="form-group input-label">
                     <label htmlFor="name">Name: </label>

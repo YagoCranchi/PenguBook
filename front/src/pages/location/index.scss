@@ -1,0 +1,18 @@
+.location-form {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .form-group {
+        width: 32%;
+    }
+
+    .btn-box {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}

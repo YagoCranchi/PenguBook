@@ -57,6 +57,11 @@ a {
             background-color: #c82333;
         }
     }
+
+    &:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+    }
 }
 
 .app-layout {
@@ -86,6 +91,12 @@ a {
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
             color: #555555;
+
+            span {
+                color: #a3a3a3;
+                font-size: 0.6rem;
+                margin-left: 5px;
+            }
         }
 
         input {
@@ -140,7 +151,41 @@ a {
                 border: 1px solid red;
                 background-color: #fff8f8;
             }
-            
+        }
+
+        .box {
+            display: flex;
+            margin-bottom: 1rem;
+
+            span {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding: 5px 15px;
+                border-radius: 4px;
+                background-color: #3b5f84;
+                color: #ffffff;
+                border: 1px solid #cccccc;
+            }
+
+            input {
+                margin-bottom: 0;
+            }
+
+            span, input {
+
+                &:first-child {
+                    border-right-width: 0;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                &:last-child {
+                    border-left-width: 0;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+            }
         }
     }
 }

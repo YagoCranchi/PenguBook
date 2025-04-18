@@ -62,7 +62,7 @@ const UsersList = () => {
                     data={data}
                 />
             ) : (
-                <p className="users-table__no-data">Nenhum usuário encontrado</p>
+                <p className="users-table__no-data">No users found</p>
             )}
 
             <UserDialog

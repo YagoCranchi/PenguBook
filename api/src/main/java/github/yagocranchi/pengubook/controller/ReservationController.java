@@ -4,19 +4,22 @@ import github.yagocranchi.pengubook.entities.User;
 import github.yagocranchi.pengubook.entities.Location;
 import github.yagocranchi.pengubook.entities.Reservation;
 import github.yagocranchi.pengubook.controller.dto.CreateReservationDto;
+import github.yagocranchi.pengubook.controller.dto.ReservationDateDto;
 import github.yagocranchi.pengubook.repository.UserRepository;
 import github.yagocranchi.pengubook.repository.LocationRepository;
 import github.yagocranchi.pengubook.repository.ReservationRepository;
 import github.yagocranchi.pengubook.utils.ValidationError;
+import github.yagocranchi.pengubook.service.AvailabilityService;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +33,16 @@ public class ReservationController {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
+    private final AvailabilityService availabilityService;
 
     public ReservationController(ReservationRepository reservationRepository,
-                                 UserRepository userRepository,
-                                 LocationRepository locationRepository) {
+                         UserRepository userRepository,
+                         LocationRepository locationRepository,
+                         AvailabilityService availabilityService) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
+        this.availabilityService = availabilityService;
     }
 
     @GetMapping("/")
@@ -52,10 +58,18 @@ public class ReservationController {
 
         return ResponseEntity.ok(reservations);
     }
+    
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        List<Reservation> allReservations = reservationRepository.findAll();
+        return ResponseEntity.ok(allReservations);
+    }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Transactional
-    public ResponseEntity<List<ValidationError>> createReservation(@RequestBody CreateReservationDto dto) {
+    public ResponseEntity<?> createReservation(@RequestBody CreateReservationDto dto) {
         List<ValidationError> errors = new ArrayList<>();
 
         Optional<User> userOpt = userRepository.findById(dto.userId());
@@ -73,10 +87,8 @@ public class ReservationController {
         }
 
         if (locationOpt.isPresent()) {
-            boolean hasConflict = reservationRepository.existsByLocationAndDateRange(
-                locationOpt.get(), dto.startDate(), dto.endDate()
-            );
-            if (hasConflict) {
+            Location location = locationOpt.get();
+            if (!availabilityService.isLocationAvailable(location, dto.startDate(), dto.endDate())) {
                 errors.add(new ValidationError(3, "Location is not available for the selected dates."));
             }
         }
@@ -98,9 +110,62 @@ public class ReservationController {
 
         reservationRepository.save(reservation);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        availabilityService.blockLocationForReservation(reservation);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
     }
 
+    @PostMapping("/{locationId}")
+    @Transactional
+    public ResponseEntity<?> createUserReservation(
+            @PathVariable UUID locationId,
+            @RequestBody ReservationDateDto dto,
+            JwtAuthenticationToken token) {
+        
+        List<ValidationError> errors = new ArrayList<>();
+        
+        UUID userId = UUID.fromString(token.getName());
+        
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        
+        Optional<Location> locationOpt = locationRepository.findById(locationId);
+        if (locationOpt.isEmpty()) {
+            errors.add(new ValidationError(1, "Location not found."));
+            return ResponseEntity.badRequest().body(errors);
+        }
+        
+        if (dto.startDate().isAfter(dto.endDate())) {
+            errors.add(new ValidationError(2, "Start date must be before end date."));
+        }
+        
+        Location location = locationOpt.get();
+        if (!availabilityService.isLocationAvailable(location, dto.startDate(), dto.endDate())) {
+            errors.add(new ValidationError(3, "Location is not available for the selected dates."));
+        }
+        
+        if (!errors.isEmpty()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+        
+        Reservation reservation = new Reservation();
+        reservation.setUser(userOpt.get());
+        reservation.setLocation(location);
+        reservation.setStartDate(dto.startDate());
+        reservation.setEndDate(dto.endDate());
+        
+        BigDecimal finalValue = calculateFinalValue(location, dto.startDate(), dto.endDate());
+        reservation.setFinalValue(finalValue);
+        reservation.setStatus("PENDING");
+        
+        reservationRepository.save(reservation);
+        
+        availabilityService.blockLocationForReservation(reservation);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
+    }
     
     private BigDecimal calculateFinalValue(Location location, LocalDateTime startDate, LocalDateTime endDate) {
         long hours = Duration.between(startDate, endDate).toHours();

@@ -11,7 +11,8 @@ public class Reservation {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    @Column(name = "reservation_id")
+    private UUID reservationId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,12 +27,12 @@ public class Reservation {
     private BigDecimal finalValue;
     private String status;
 
-    public UUID getId() {
-        return id;
+    public UUID getReservationId() {
+        return reservationId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setReservationId(UUID reservationId) {
+        this.reservationId = reservationId;
     }
 
     public User getUser() {

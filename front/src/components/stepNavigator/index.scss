@@ -1,0 +1,33 @@
+.step-navigator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .steps {
+        display: flex;
+        gap: 8px;
+
+        .step {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            transition: background-color 0.3s ease-in-out;
+            
+            &.active {
+                background-color: #007bff;
+            }
+        }
+    }
+
+    .btn {
+        background-color: transparent;
+        color: #007BFF;
+        box-shadow: none;
+
+        &:disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+    }
+}

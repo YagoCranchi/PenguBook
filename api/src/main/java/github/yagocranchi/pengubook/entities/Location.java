@@ -12,7 +12,7 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "location_id")
-    private UUID id;
+    private UUID locationId;
 
     @Column(nullable = false)
     private String name;
@@ -35,12 +35,12 @@ public class Location {
     @Column(nullable = false, updatable = false)
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    public UUID getId() {
-        return id;
+    public UUID getLocationId() {
+        return locationId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setLocationId(UUID locationId) {
+        this.locationId = locationId;
     }
 
     public String getName() {

@@ -14,8 +14,8 @@ const SideBarNav: React.FC<SideBarNavProps> = ({ isAdmin }) => {
                     <li className={location.pathname === "/users" ? "active" : ""}>
                         <Link to="/users">List Users</Link>
                     </li>
-                    <li className={location.pathname === "/item2" ? "active" : ""}>
-                        <Link to="/locacao">Locação</Link>
+                    <li className={location.pathname === "/location" ? "active" : ""}>
+                        <Link to="/location">Locação</Link>
                     </li>
                 </>
             )}
