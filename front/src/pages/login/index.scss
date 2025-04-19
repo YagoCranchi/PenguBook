@@ -4,74 +4,64 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-}
 
-.login-container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 4px 6px 8px #0000001a;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-}
+    .login-container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 4px 6px 8px #0000001a;
+        width: 95%;
+        max-width: 400px;
+        margin: 0 auto;
+    
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333333;
+            text-align: center;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #555555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
 
-.login-container h1 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #333333;
-    text-align: center;
-}
+            &:focus {
+                border-color: #007bff;
+                outline: none;
+            }
 
-.login-container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.login-container label {
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: #555555;
-}
-
-.login-container input {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.login-container input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.login-container button {
-    padding: 0.8rem;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-container button:hover {
-    background-color: #0056b3;
-}
-
-.login-container .error-message {
-    color: #ff0000;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.login-container input.input-error {
-    border: 1px solid red;
-    background-color: #fff8f8;
+            &.input-error {
+                border: 1px solid red;
+                background-color: #fff8f8;
+            }
+        }
+        
+        button {
+            padding: 0.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .error-message {
+            color: #ff0000;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    }
 }

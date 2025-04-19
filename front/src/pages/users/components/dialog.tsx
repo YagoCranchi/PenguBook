@@ -87,7 +87,6 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
 
             }
         } else {
-            console.log('Creating user...');
             try {
                 await axiosPrivate.post('/user/create-without-password', {
                     name,

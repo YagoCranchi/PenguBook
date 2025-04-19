@@ -4,7 +4,7 @@ import "./index.scss";
 
 const UsersPage = () => {
     return (
-        <div>
+        <div className="users-page">
             <h1 className="page-title">List Users</h1>
             <UsersList />
         </div>

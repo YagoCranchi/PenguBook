@@ -11,9 +11,9 @@ const LoginPage: React.FC = () => {
             <div className="login-container">
                 <h1>Login</h1>
                 <LoginForm />
-                <div className="register-container">
+                <div>
                     Don't have an account?
-                    <Link to="/signup" className="register-link"> Sign up now</Link>
+                    <Link to="/signup"> Sign up now</Link>
                 </div>
             </div>
         </div>

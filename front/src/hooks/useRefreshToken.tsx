@@ -22,7 +22,7 @@ const useRefreshToken = () => {
 };
 
 async function getUserInfos(accessToken: string) {
-    if (!accessToken) return console.log('No access token provided');
+    if (!accessToken) return console.error('No access token provided');
 
     try {
         const response = await axios.get('/user', {

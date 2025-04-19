@@ -106,6 +106,7 @@ a {
             border: 1px solid #cccccc;
             border-radius: 4px;
             font-size: 1rem;
+            max-height: 45px;
 
             &:focus {
                 border-color: #007bff;
@@ -126,6 +127,7 @@ a {
         select {
             width: 100%;
             padding: 0.8rem;
+            padding-right: 40px;
             margin-bottom: 1rem;
             border: 1px solid #cccccc;
             border-radius: 4px;
@@ -136,7 +138,8 @@ a {
             background-position: right 0.8rem center;
             background-size: 1rem;
             transition: transform 0.3s ease;
-
+            max-height: 45px;
+            
             &:focus {  
                 border-color: #007bff;
                 outline: none;

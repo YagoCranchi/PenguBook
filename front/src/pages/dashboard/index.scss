@@ -11,10 +11,15 @@
         flex: 1;
 
         .date-box {
-            display: flex;
+            display: block;
             justify-content: center;
             gap: 10px;
-            margin: 0 auto;
+            margin: 0 auto 15px auto;
+            width: 100%;
+
+            .form-group {
+                width: 100%;
+            }
 
             .search-btn {
                 display: flex;
@@ -25,6 +30,11 @@
                     margin-top: 14px;
                     height: 48px;
                 }
+            }
+
+            @media (min-width: 768px) {
+                width: auto;
+                display: flex;
             }
         }
 
@@ -40,7 +50,7 @@
                 flex-direction: column;
                 padding: 10px;
                 border-radius: 5px;
-                background-color: #f0f0f0;
+                background-color: #ffffff;
                 border-radius: 8px;
                 box-shadow: 1px 1px 8px #00000021;
                 transition: all 0.3s ease-in-out;

@@ -22,10 +22,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <h1 className="profile-title">{formattedUserName}'s Profile</h1>
-        <p>Welcome {userName}!</p>
-      </div>
+      <h1 className="page-title">{formattedUserName}'s Profile</h1>
 
       <ProfileEdit />
     </div>

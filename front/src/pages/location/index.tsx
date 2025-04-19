@@ -4,7 +4,7 @@ import "./index.scss";
 const LocationPage = () => {
 
     return (
-        <div>
+        <div className="locations-page">
             <h1 className="page-title">Create new location</h1>
             <LocationsList />
         </div>

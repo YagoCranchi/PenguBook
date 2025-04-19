@@ -9,9 +9,9 @@ const SignupPage = () => {
       <div className="signup-container">
         <h1>SignUp</h1>
         <SignupForm />
-        <div className="register-container">
+        <div>
           Aready have an account?
-          <Link to="/login" className="register-link"> Login</Link>
+          <Link to="/login"> Login</Link>
         </div>
       </div>
     </div>

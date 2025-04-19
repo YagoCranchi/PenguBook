@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ListReservationsDialog from "./dialog";
 import useAxiosPrivate from "../../../hooks/axiosPrivate";
 import Icon from "@mdi/react";
-import { mdiCog } from "@mdi/js";
+import { mdiCog, mdiPlusBox } from "@mdi/js";
 import Table from "../../../components/table";
 
 const ListReservations = () => {
@@ -54,7 +54,7 @@ const ListReservations = () => {
             </button>
         ),
     }));
-    
+
     const handleIconClick = (reservation: any) => {
         setSelectedReservation(reservation);
         setIsDialogOpen(true);
@@ -64,15 +64,24 @@ const ListReservations = () => {
         setIsDialogOpen(false);
         setSelectedReservation(null);
     };
+
+    const handleAddReservation = () => {
+        setSelectedReservation(null);
+        setIsDialogOpen(true);
+    };
+
     return (
-        <div className="reservations-box">
+        <div className={'reservations-box ' + (reservations?.length ? '' : 'full')}>
+            <button className="btn add" onClick={handleAddReservation}>
+                <Icon path={mdiPlusBox} size={1} />
+            </button>
             {reservations?.length ? (
                 <Table
                     headers={headers}
                     data={data}
                 />
             ) : (
-                <p className="users-table__no-data">No Reservations found</p>
+                <p className="no-reservations">No Reservations found</p>
             )}
             <ListReservationsDialog
                 isOpen={isDialogOpen}

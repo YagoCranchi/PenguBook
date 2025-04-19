@@ -48,7 +48,6 @@ const DashboardList = () => {
                     <input
                         type="datetime-local"
                         id="reservation-time"
-                        className="form-control"
                         onChange={(e) => {
                             setReservation(new Date(e.target.value));
                             setReservationSelected(true)
@@ -62,7 +61,6 @@ const DashboardList = () => {
                     <input
                         type="datetime-local"
                         id="exit-time"
-                        className="form-control"
                         onChange={(e) => {
                             setExit(new Date(e.target.value))
                             setExitSelected(true);

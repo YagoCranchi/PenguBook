@@ -59,7 +59,7 @@ const LocationsList = () => {
         }
 
     return (
-        <div className="locations-box">
+        <div className={'locations-box' + (locations?.length ? '' : ' full')}>
             <button className="btn add" onClick={handleAddLocation}>
                 <Icon path={mdiPlusBox} size={1} />
             </button>
@@ -69,7 +69,7 @@ const LocationsList = () => {
                     data={data}
                 />
             ) : (
-                <p>No locations found</p>
+                <p className="no-locations">No locations found</p>
             )}
 
             <LocationDialog

@@ -58,7 +58,7 @@ const UsersList = () => {
     };
 
     return (
-        <div className="users-box">
+        <div className={'users-box' + (users?.length ? ' ' : 'full')}>
             <button className="btn add" onClick={handleAddUser}>
                 <Icon path={mdiPlusBox} size={1} />
             </button>
@@ -68,7 +68,7 @@ const UsersList = () => {
                     data={data}
                 />
             ) : (
-                <p className="users-table__no-data">No users found</p>
+                <p className="no-users">No users found</p>
             )}
 
             <UserDialog

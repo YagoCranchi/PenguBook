@@ -13,9 +13,8 @@ const LoginForm = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
 
-    const [name, setName] = useState('admin');
-    const [password, setPassword] = useState('123');
-    const [errorMsg, setErrorMsg] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     const [invalidFields, setInvalidFields] = useState<{ [key: string]: boolean }>({});
 
     const handleLoginForm = async (e: React.FormEvent) => {
@@ -39,15 +38,16 @@ const LoginForm = () => {
             navigate(from, { replace: true });
         } catch (err: any) {
             if (!err?.response) {
-                setErrorMsg('No server response');
+                toast.error('No server response');
             } else {
-                setErrorMsg('Invalid username or password');
+                setInvalidFields({ name: true, password: true });
+                toast.error('Invalid username or password');
             }
         }
     };
 
     async function getUserInfos(accessToken: string) {
-        if (!accessToken) return console.log('No access token provided');
+        if (!accessToken) return console.error('No access token provided');
 
         try {
             const response = await axios.get('/user', {
@@ -57,10 +57,9 @@ const LoginForm = () => {
             return response.data;
         } catch (err: any) {
             if (!err?.response) {
-                console.log(err);
-                setErrorMsg('No server response');
+                toast.error('No server response');
             } else {
-                setErrorMsg('Could not fetch user information');
+                toast.error('Could not fetch user information');
             }
         }
     }
@@ -87,8 +86,7 @@ const LoginForm = () => {
                     className={invalidFields.password ? "input-error" : ""}
                 />
             </div>
-            <p className='errorMessage'>{errorMsg}</p>
-            <button type="submit" className="btn login-button">Login</button>
+            <button type="submit" className="btn">Login</button>
         </form>
     )
 };
