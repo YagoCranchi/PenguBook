@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-import SideBarNav from './nav';
-import SideBarUserBox from './userBox';
+import SideBarNav from './components/nav';
+import SideBarUserBox from './components/userBox';
 import { mdiBackburger, mdiMenu } from '@mdi/js';
 import Icon from '@mdi/react';
 

@@ -47,6 +47,7 @@ const ReservationsList = () => {
         const date = new Date(dateString);
         return date.toLocaleString('en-US');
     };
+    
     return (
         <>
             {reservations.length > 0 ? (

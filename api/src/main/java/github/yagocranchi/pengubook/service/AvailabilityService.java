@@ -23,7 +23,7 @@ public class AvailabilityService {
         LocationAvailabilityRepository availabilityRepository,
         LocationAvailabilityRepository locationAvailabilityRepository,
         ReservationRepository reservationRepository) {
-        
+
         this.availabilityRepository = availabilityRepository;
         this.locationAvailabilityRepository = locationAvailabilityRepository;
         this.reservationRepository = reservationRepository;
@@ -33,6 +33,17 @@ public class AvailabilityService {
         List<LocationAvailability> conflicts = availabilityRepository
             .findConflictingBlocks(location, start, end);
 
+        return conflicts.isEmpty();
+    }
+
+    public boolean isLocationAvailableExcludingReservation(Location location, LocalDateTime start, LocalDateTime end, UUID reservationId) {
+        List<LocationAvailability> conflicts = availabilityRepository
+            .findConflictingBlocks(location, start, end);
+        
+        conflicts.removeIf(block -> 
+            reservationId != null && 
+            reservationId.equals(block.getReservationId()));
+        
         return conflicts.isEmpty();
     }
 
@@ -83,5 +94,31 @@ public class AvailabilityService {
     public List<LocationAvailability> getBlocksByLocation(UUID locationId, String reason,
         LocalDateTime startDate, LocalDateTime endDate) {
         return availabilityRepository.findByLocationWithFilters(locationId, reason, startDate, endDate);
+    }
+
+    public LocationAvailability getBlockByReservationId(UUID reservationId) {
+        if (reservationId == null) {
+            return null;
+        }
+        
+        return availabilityRepository.findByReservationId(reservationId);
+    }
+
+    @Transactional
+    public void removeReservationBlockByReservationId(Reservation reservation) {
+        LocationAvailability block = getBlockByReservationId(reservation.getReservationId());
+        if (block != null) {
+            locationAvailabilityRepository.delete(block);
+        }
+    }
+
+    @Transactional
+    public void updateReservationBlock(Reservation reservation) {
+        LocationAvailability oldBlock = getBlockByReservationId(reservation.getReservationId());
+        if (oldBlock != null) {
+            locationAvailabilityRepository.delete(oldBlock);
+        }
+        
+        blockLocationForReservation(reservation);
     }
 }

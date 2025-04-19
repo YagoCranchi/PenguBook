@@ -98,6 +98,4 @@ public class Location {
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
-    
-    
 }

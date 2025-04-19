@@ -22,10 +22,20 @@ public class Reservation {
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
+    @Column(nullable = false)
     private LocalDateTime startDate;
+
+    @Column(nullable = false)
     private LocalDateTime endDate;
+
+    @Column(nullable = false)
     private BigDecimal finalValue;
+
+    @Column(nullable = false)
     private String status;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     public UUID getReservationId() {
         return reservationId;
@@ -81,5 +91,13 @@ public class Reservation {
 
     public void setStatus(String status) {
         this.status = status;
-    }    
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 }

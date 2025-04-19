@@ -36,4 +36,6 @@ public interface LocationAvailabilityRepository extends JpaRepository<LocationAv
         @Param("endDate") LocalDateTime endDate);
     
     boolean existsByLocationAndReservationId(Location location, UUID reservationId);
+
+    LocationAvailability findByReservationId(UUID reservationId);
 }

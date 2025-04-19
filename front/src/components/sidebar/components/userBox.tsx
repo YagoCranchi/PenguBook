@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiLogout } from "@mdi/js";
 
-import useLogoff from "../../hooks/useLogoff";
-import useAuth from "../../hooks/useAuth";
+import useLogoff from "../../../hooks/useLogoff";
+import useAuth from "../../../hooks/useAuth";
 
-import DialogConfirm from "../dialog/confirm";
+import DialogConfirm from "../../dialog/confirm";
 
 const SideBarUserBox = () => {
     const navigate = useNavigate();

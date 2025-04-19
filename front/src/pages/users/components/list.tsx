@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/axiosPrivate";
-import useAuth from "../../../hooks/useAuth";
 import Table from "../../../components/table";
 import Icon from "@mdi/react";
 import { mdiCog } from "@mdi/js";
@@ -11,7 +10,6 @@ const UsersList = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<any>(null);
     const axiosPrivate = useAxiosPrivate();
-    const { auth } = useAuth();
 
     const fetchUsers = async () => {
         try {
@@ -24,7 +22,7 @@ const UsersList = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [auth, axiosPrivate]);
+    }, [axiosPrivate]);
 
     const headers = ["Name", "Email", "CPF", "Phone", "Creation Date", "Role", "Actions"];
     const data = users.map((user: any) => ({

@@ -17,6 +17,7 @@ import UsersPage from "./pages/users";
 import './app.scss';
 import LocationPage from "./pages/location";
 import ReservationsPage from "./pages/reservations/indes";
+import ListReservationsPage from "./pages/list-reservations";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route element={<RequireAuth allowedRole={"ADMIN"} />}>
               <Route path="users" element={<UsersPage />} />
               <Route path="location" element={<LocationPage />} />
+              <Route path="list-reservations" element={<ListReservationsPage />} />
             </Route>
           </Route>
         </Route>

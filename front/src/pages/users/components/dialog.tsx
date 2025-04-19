@@ -51,7 +51,6 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
             errors.forEach((error) => toast.error(error));
             return;
         }
-        const controller = new AbortController();
 
         try {
             await axiosPrivate.put(`/user/update/${user?.userId}`, 
@@ -59,9 +58,7 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
                     name,
                     email,
                     phone
-                }, {
-                    signal: controller.signal
-            });
+                });
 
             toast.success('User updated successfully!');
             onClose();

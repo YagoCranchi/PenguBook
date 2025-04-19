@@ -1,0 +1,54 @@
+.reservations-box {
+    width: 95%;
+    margin: 0 auto;
+
+    .icon-button {
+        margin: 0 5px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        color: #5f5f5f;
+        font-size: 20px;
+        transition: color 0.3s ease;
+        
+        svg {
+            transition: transform 0.3s ease;
+        }
+        &:hover {
+            color: #2b2b2b;
+            
+            svg {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .dialog {
+        h2 {
+            font-size: 1.2em;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0 5px 0;
+        }
+
+        .user-data, .check-data {
+            &-content {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 10px;
+
+                .form-group {
+                    min-width: 200px;
+                    flex: 1;
+                }
+
+                .date {
+                    width: 100%;
+                    display: flex;
+                    gap: 5px;
+                }
+            }
+        }
+    }
+}
