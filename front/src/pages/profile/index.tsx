@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth";
-import ProfileEdit from "./components/edit";
+import ProfileEdit from "./components/edit/form";
 
 import "./index.scss";
 

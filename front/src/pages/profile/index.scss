@@ -15,23 +15,23 @@
     }
 
     .profile-edit {
-        display: flex;
-        flex-direction: column;
         margin-bottom: 20px;
-        max-width: 450px;
-        .profile-info-item {
-            width: 100%;
 
-            .profile-info-label {
-                font-size: 18px;
-                font-weight: bold;
+        .input-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            width: 100%;
+            
+            .input-label {
+                flex: 1;
+                min-width: 250px;
             }
-    
-            .profile-info-value {
-                width: 100%;
-                font-size: 16px;
-                margin-top: 5px;
-            }
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: end;
         }
     }
 }
