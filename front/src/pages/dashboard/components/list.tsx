@@ -103,8 +103,6 @@ const DashboardList = () => {
                 onClose={() => setDialogOpen(false)}
                 onConfirm={async () => {
                     try {
-                        console.log(reservation.toISOString());
-                        console.log(exit.toISOString());
                         await axiosPrivate.post("/reservation/" + selectedLocation.locationId, {
                             startDate: reservation.toISOString(),
                             endDate: exit.toISOString()

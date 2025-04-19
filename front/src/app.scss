@@ -153,6 +153,27 @@ a {
             }
         }
 
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+
+            &:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+
+            &.input-error {
+                border: 1px solid red;
+                background-color: #fff8f8;
+            }
+        }
+
         .box {
             display: flex;
             margin-bottom: 1rem;

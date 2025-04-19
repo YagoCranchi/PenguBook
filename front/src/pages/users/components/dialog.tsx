@@ -41,9 +41,12 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
             setPhone(user.phone || '');
             setRole(user.roles?.[0]?.name || '');
         }
+        setInvalidFields({});
     }, [user]);
 
     const updateUser = async () => {
+        setInvalidFields({});
+
         const { isValid, errors, invalidFields } = validateForm(name, email, phone);
 
         if (!isValid) {
