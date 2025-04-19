@@ -1,0 +1,848 @@
+{
+	"info": {
+		"_postman_id": "ab29b974-6a7f-4047-b449-ade3478af4ac",
+		"name": "Reservas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24859315"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Yago01\",\r\n\t\"password\": \"123\",\r\n    \"email\": \"yago01@hotmail.com\",\r\n    \"phone\": \"+55 11 9 9365-2262\",\r\n    \"cpf\": \"480.625.932-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}user/create",
+							"host": [
+								"{{baseUrl}}user"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code < 300) {\r",
+									"    const json = pm.response.json();\r",
+									"    pm.environment.set('accessToken', json.accessToken);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"admin\",\r\n\t\"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}login",
+							"host": [
+								"{{baseUrl}}login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    postman.setEnvironmentVariable('accessToken', json.accessToken);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}refresh",
+							"host": [
+								"{{baseUrl}}refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logoff",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}logoff",
+							"host": [
+								"{{baseUrl}}logoff"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "List All",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}user/all",
+									"host": [
+										"{{baseUrl}}user"
+									],
+									"path": [
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}user/13a85e1f-b6a7-4953-a87c-d09794d00b60",
+									"host": [
+										"{{baseUrl}}user"
+									],
+									"path": [
+										"13a85e1f-b6a7-4953-a87c-d09794d00b60"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Other User Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"yago1\",\r\n    \"email\": \"emailTeste@teste.com\",\r\n    \"phone\": \"+55 11 9 8765-4321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}user/13a85e1f-b6a7-4953-a87c-d09794d00b60",
+									"host": [
+										"{{baseUrl}}user"
+									],
+									"path": [
+										"13a85e1f-b6a7-4953-a87c-d09794d00b60"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Without Password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"yago1\",\r\n    \"email\": \"emailTeste1@teste.com\",\r\n    \"phone\": \"+55 11 9 8765-4321\",\r\n    \"cpf\": \"480.625.938-19\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}user/create-without-password",
+									"host": [
+										"{{baseUrl}}user"
+									],
+									"path": [
+										"create-without-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Infos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}user",
+							"host": [
+								"{{baseUrl}}user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"yago\",\r\n    \"email\": \"emailTeste@teste.com\",\r\n    \"phone\": \"+55 11 9 8765-4320\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}user/update",
+							"host": [
+								"{{baseUrl}}user"
+							],
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Blocks",
+							"item": [
+								{
+									"name": "Block",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"startDate\": \"2025-07-10T08:00:00\",\r\n  \"endDate\": \"2025-07-15T18:00:00\",\r\n  \"reason\": \"MAINTENANCE\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}location/block/83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3",
+											"host": [
+												"{{baseUrl}}location"
+											],
+											"path": [
+												"block",
+												"83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Blocks ID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}location/blocks/e21804b9-18e3-4748-9a78-bc24fe7da3df",
+											"host": [
+												"{{baseUrl}}location"
+											],
+											"path": [
+												"blocks",
+												"e21804b9-18e3-4748-9a78-bc24fe7da3df"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Block",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{accessToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}location/block/83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3/456f470a-266e-4da3-aed5-309b32c8db1c",
+											"host": [
+												"{{baseUrl}}location"
+											],
+											"path": [
+												"block",
+												"83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3",
+												"456f470a-266e-4da3-aed5-309b32c8db1c"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Premium Meeting Room\",\r\n  \"type\": \"Room\",\r\n  \"description\": \"Perfect space for business meetings, includes air conditioning and projector.\",\r\n  \"hourlyRate\": 150.00,\r\n  \"minimumTime\": 60,\r\n  \"maximumTime\": 480\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}location/create",
+									"host": [
+										"{{baseUrl}}location"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List All",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}location/all",
+									"host": [
+										"{{baseUrl}}location"
+									],
+									"path": [
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Premium Meeting Room teste\",\r\n  \"type\": \"Room 2\",\r\n  \"description\": \"Perfect space for business meetings, includes air conditioning and projector. 2\",\r\n  \"hourlyRate\": 50.00,\r\n  \"minimumTime\": 600,\r\n  \"maximumTime\": 4800\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}location/69d12c93-a078-4cef-bfd3-0601e42d0c21",
+									"host": [
+										"{{baseUrl}}location"
+									],
+									"path": [
+										"69d12c93-a078-4cef-bfd3-0601e42d0c21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Premium Meeting Room teste\",\r\n  \"type\": \"Room 2\",\r\n  \"description\": \"Perfect space for business meetings, includes air conditioning and projector. 2\",\r\n  \"hourlyRate\": 50.00,\r\n  \"minimumTime\": 600,\r\n  \"maximumTime\": 4800\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}location/17e53c72-c369-4b8e-bbe1-1d8142c60910",
+									"host": [
+										"{{baseUrl}}location"
+									],
+									"path": [
+										"17e53c72-c369-4b8e-bbe1-1d8142c60910"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}location/available?checkIn=2025-05-10T08:00:00&checkOut=2025-05-10T10:00:00",
+							"host": [
+								"{{baseUrl}}location"
+							],
+							"path": [
+								"available"
+							],
+							"query": [
+								{
+									"key": "checkIn",
+									"value": "2025-05-10T08:00:00"
+								},
+								{
+									"key": "checkOut",
+									"value": "2025-05-10T10:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "List All",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}reservation/all",
+									"host": [
+										"{{baseUrl}}reservation"
+									],
+									"path": [
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"84a2994f-19b6-4b4e-b84e-83ea526ddf18\",\r\n  \"locationId\": \"83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3\",\r\n  \"startDate\": \"2025-06-13T14:00:00\",\r\n  \"endDate\": \"2025-06-13T17:00:00\",\r\n  \"status\": \"PENDING\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}reservation/create",
+									"host": [
+										"{{baseUrl}}reservation"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": \"84a2994f-19b6-4b4e-b84e-83ea526ddf18\",\r\n    \"locationId\": \"d19ce151-d84c-4ee8-ac2a-8b04401ad2aa\",\r\n    \"startDate\": \"2025-04-19T01:46:00\",\r\n    \"endDate\": \"2025-04-19T02:46:00\",\r\n    \"finalValue\": 150.00,\r\n    \"status\": \"PENDING\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}reservation/621c17f0-0e91-44ea-a869-85788a50b74e",
+									"host": [
+										"{{baseUrl}}reservation"
+									],
+									"path": [
+										"621c17f0-0e91-44ea-a869-85788a50b74e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}reservation/0323b442-f99b-41ee-b371-beb9205c0af9",
+									"host": [
+										"{{baseUrl}}reservation"
+									],
+									"path": [
+										"0323b442-f99b-41ee-b371-beb9205c0af9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}reservation/",
+							"host": [
+								"{{baseUrl}}reservation"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2025-06-10T08:00:00\",\r\n    \"endDate\": \"2025-06-15T18:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}reservation/83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3",
+							"host": [
+								"{{baseUrl}}reservation"
+							],
+							"path": [
+								"83a6ddbc-4381-48cc-9ff5-bd3c1fac93b3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
