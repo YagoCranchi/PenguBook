@@ -53,7 +53,7 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
         }
 
         try {
-            await axiosPrivate.put(`/user/update/${user?.userId}`, 
+            await axiosPrivate.put(`/user/${user?.userId}`, 
                 {
                     name,
                     email,
@@ -72,6 +72,23 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
                 }
             }
             
+        }
+    };
+
+    const deleteUser = async () => {
+        try {
+            await axiosPrivate.delete(`/user/${user?.userId}`);
+            toast.success('User deleted successfully!');
+            onClose();
+            onUpdate();
+        } catch (err: any) {
+            if (!err?.response) {
+                toast.error('No server response');
+            } else {
+                for (let i = 0; i < err.response.data.length; i++) {
+                    toast.error(err.response.data[i].message);
+                }
+            }
         }
     };
 
@@ -137,7 +154,7 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
             </DialogBody>
             <DialogFooter>
                 <div className="flex between">
-                    <button className="btn danger">
+                    <button className="btn danger" onClick={deleteUser}>
                         Delete
                     </button>
                     <button className="btn" onClick={updateUser}>
