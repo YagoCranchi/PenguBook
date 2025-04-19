@@ -1,0 +1,90 @@
+.reservations-page {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100vh;
+
+    .reservations-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+
+        .reservation-card {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 1px 1px 8px #00000021;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+
+            .location-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: center;
+                color: #2c3e50;
+            }
+
+            .status {
+                &-badge {
+                    position: absolute;
+                    bottom: 5px;
+                    right: 5px;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    font-size: 0.8em;
+                    font-weight: bold;
+                    color: #fff;
+                }
+                &-pending {
+                    background-color: #f39c12;
+                }
+                &-confirmed {
+                    background-color: #2ecc71;
+                }
+                &-checked-in {
+                    background-color: #3498db;
+                }
+                &-checked-out {
+                    background-color: #e74c3c;
+                }
+            }
+
+            .reservation-details {
+                .reservation-date {
+                    display: flex;
+                    justify-content: space-between;
+                    p {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .no-reservations {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 1.5em;
+        color: #2c3e50;
+    }
+
+    @media (min-width: 768px) {
+        .reservations-list .reservation-card {
+            width: 30%;
+            min-width: 450px;
+        }
+    }
+}

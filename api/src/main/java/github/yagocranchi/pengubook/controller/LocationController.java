@@ -13,11 +13,11 @@ import github.yagocranchi.pengubook.controller.dto.CreateLocationDto;
 import github.yagocranchi.pengubook.entities.LocationAvailability;
 import github.yagocranchi.pengubook.repository.LocationAvailabilityRepository;
 import github.yagocranchi.pengubook.repository.LocationRepository;
-import github.yagocranchi.pengubook.repository.ReservationRepository;
 import github.yagocranchi.pengubook.service.AvailabilityService;
 import github.yagocranchi.pengubook.utils.ValidationError;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,16 +28,13 @@ public class LocationController {
 
     private final LocationRepository locationRepository;
     private final LocationAvailabilityRepository locationAvailabilityRepository;
-    private final ReservationRepository reservationRepository;
     private final AvailabilityService availabilityService;
 
     public LocationController(
         LocationRepository locationRepository,
-        ReservationRepository reservationRepository,
         LocationAvailabilityRepository locationAvailabilityRepository,
         AvailabilityService availabilityService) {
         this.locationRepository = locationRepository;
-        this.reservationRepository = reservationRepository;
         this.availabilityService = availabilityService;
         this.locationAvailabilityRepository = locationAvailabilityRepository;
     }
@@ -101,10 +98,21 @@ public class LocationController {
             );
         }
 
+        long durationInMinutes = Duration.between(checkIn, checkOut).toMinutes();
+
         List<Location> allLocations = locationRepository.findAll();
 
         List<Location> availableLocations = allLocations.stream()
-            .filter(location -> availabilityService.isLocationAvailable(location, checkIn, checkOut))
+            .filter(location -> {
+                boolean isAvailable = availabilityService.isLocationAvailable(location, checkIn, checkOut);
+
+                boolean meetsMinimumTime = durationInMinutes >= location.getMinimumTime();
+
+                boolean meetsMaximumTime = location.getMaximumTime() == null || 
+                                          durationInMinutes <= location.getMaximumTime();
+
+                return isAvailable && meetsMinimumTime && meetsMaximumTime;
+            })
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(availableLocations);

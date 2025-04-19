@@ -16,6 +16,7 @@ import UsersPage from "./pages/users";
 
 import './app.scss';
 import LocationPage from "./pages/location";
+import ReservationsPage from "./pages/reservations/indes";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route element={<RequireAuth allowedRole={"BASIC"} />}>
               <Route index element={<DashboardPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="reservations" element={<ReservationsPage />} />
             </Route>
 
             <Route element={<RequireAuth allowedRole={"ADMIN"} />}>

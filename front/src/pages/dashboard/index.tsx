@@ -7,7 +7,7 @@ const DashboardPage = () => {
   const userInfos = auth?.userInfo || null;
 
   return (
-    <div>
+    <div className="dashboard-page">
       <h1 className="page-title">Dashboard</h1>
       <DashboardList />
     </div>
