@@ -22,6 +22,7 @@ import github.yagocranchi.pengubook.entities.User;
 import github.yagocranchi.pengubook.repository.RoleRepository;
 import github.yagocranchi.pengubook.repository.UserRepository;
 import github.yagocranchi.pengubook.controller.dto.CreateUserDto;
+import github.yagocranchi.pengubook.controller.dto.CreateUserWithoutPasswordDto;
 import github.yagocranchi.pengubook.controller.dto.GetUserDto;
 import github.yagocranchi.pengubook.controller.dto.UpdateUserDto;
 import github.yagocranchi.pengubook.repository.ReservationRepository;
@@ -111,6 +112,46 @@ public class UserController {
         var user = new User();
         user.setName(dto.name());
         user.setPassword(passwordEncoder.encode(dto.password()));
+        user.setEmail(dto.email());
+        user.setPhone(dto.phone());
+        user.setCpf(dto.cpf());
+        user.setRoles(Set.of(basicRole));
+
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/create-without-password")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @Transactional
+    public ResponseEntity<List<ValidationError>> createUserWithoutPassword(@RequestBody CreateUserWithoutPasswordDto dto) {
+        List<ValidationError> errors = new ArrayList<>();
+
+        if (userRepository.findByName(dto.name()).isPresent()) {
+            errors.add(new ValidationError(0, "Username is already taken."));
+        }
+
+        if (userRepository.findByEmail(dto.email()).isPresent()) {
+            errors.add(new ValidationError(1, "Email is already in use."));
+        }
+
+        if (userRepository.findByCpf(dto.cpf()).isPresent()) {
+            errors.add(new ValidationError(2, "CPF is already registered."));
+        }
+
+        if (!errors.isEmpty()) {
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errors);
+        }
+
+        var basicRole = roleRepository.findByName(Role.Values.BASIC.name());
+
+        var user = new User();
+        user.setName(dto.name());
+        String randomPassword = UUID.randomUUID().toString();
+        user.setPassword(passwordEncoder.encode(randomPassword));
         user.setEmail(dto.email());
         user.setPhone(dto.phone());
         user.setCpf(dto.cpf());

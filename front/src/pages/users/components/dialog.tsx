@@ -34,20 +34,29 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
-        if (user) {
+        resetInputs();
+        if (user && user.userId) {
             setName(user.name || '');
             setEmail(user.email || '');
             setCpf(user.cpf || '');
             setPhone(user.phone || '');
             setRole(user.roles?.[0]?.name || '');
         }
-        setInvalidFields({});
     }, [user]);
+
+    const resetInputs = () => {
+        setName('');
+        setEmail('');
+        setCpf('');
+        setPhone('');
+        setRole('');
+        setInvalidFields({});
+    }
 
     const updateUser = async () => {
         setInvalidFields({});
 
-        const { isValid, errors, invalidFields } = validateForm(name, email, phone);
+        const { isValid, errors, invalidFields } = validateForm(name, email, phone, cpf);
 
         if (!isValid) {
             setInvalidFields(invalidFields);
@@ -55,26 +64,50 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
             return;
         }
 
-        try {
-            await axiosPrivate.put(`/user/${user?.userId}`, 
-                {
+        if (user?.userId) {
+            try {
+                await axiosPrivate.put(`/user/${user?.userId}`,
+                    {
+                        name,
+                        email,
+                        phone
+                    });
+
+                toast.success('User updated successfully!');
+                onClose();
+                onUpdate();
+            } catch (err: any) {
+                if (!err?.response) {
+                    toast.error('No server response');
+                } else {
+                    for (let i = 0; i < err.response.data.length; i++) {
+                        toast.error(err.response.data[i].message);
+                    }
+                }
+
+            }
+        } else {
+            console.log('Creating user...');
+            try {
+                await axiosPrivate.post('/user/create-without-password', {
                     name,
                     email,
-                    phone
+                    phone,
+                    cpf
                 });
 
-            toast.success('User updated successfully!');
-            onClose();
-            onUpdate();
-        } catch (err: any) {
-            if (!err?.response) {
-                toast.error('No server response');
-            } else {
-                for (let i = 0; i < err.response.data.length; i++) {
-                    toast.error(err.response.data[i].message);
+                toast.success('User created successfully!');
+                onClose();
+                onUpdate();
+            } catch (err: any) {
+                if (!err?.response) {
+                    toast.error('No server response');
+                } else {
+                    for (let i = 0; i < err.response.data.length; i++) {
+                        toast.error(err.response.data[i].message);
+                    }
                 }
             }
-            
         }
     };
 
@@ -127,7 +160,9 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
                         id="cpf"
                         value={cpf}
                         max={50}
-                        disabled
+                        disabled={!!user?.userId}
+                        onChange={(e) => setCpf(e.target.value)}
+                        className={invalidFields.cpf ? "input-error" : ""}
                     />
                 </div>
                 <div className="form-group input-label">
@@ -156,13 +191,15 @@ const UsersDialog: React.FC<UsersDialogProps> = ({ isOpen, onClose, user, onUpda
                 </div>
             </DialogBody>
             <DialogFooter>
-                <div className="flex between">
-                    <button className="btn danger" onClick={deleteUser}>
-                        Delete
-                    </button>
+                <div className="flex between footer">
                     <button className="btn" onClick={updateUser}>
                         Save
                     </button>
+                    {user?.userId && (
+                        <button className="btn danger" onClick={deleteUser}>
+                            Delete
+                        </button>
+                    )}
                 </div>
             </DialogFooter>
         </Dialog>

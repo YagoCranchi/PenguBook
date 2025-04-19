@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/axiosPrivate";
 import Table from "../../../components/table";
 import Icon from "@mdi/react";
-import { mdiCog } from "@mdi/js";
+import { mdiCog, mdiPlusBox } from "@mdi/js";
 import UserDialog from "./dialog";
 
 const UsersList = () => {
@@ -52,8 +52,16 @@ const UsersList = () => {
         setSelectedUser(null);
     };
 
+    const handleAddUser = () => {
+        setSelectedUser(null);
+        setIsDialogOpen(true);
+    };
+
     return (
         <div className="users-box">
+            <button className="btn add" onClick={handleAddUser}>
+                <Icon path={mdiPlusBox} size={1} />
+            </button>
             {users?.length ? (
                 <Table
                     headers={headers}

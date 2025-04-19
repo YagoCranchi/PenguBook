@@ -1,4 +1,6 @@
-const validateForm = (name: string, email: string, phone: string ) => {
+import { cpfValidator } from "../../../utils/cpf";
+
+const validateForm = (name: string, email: string, phone: string, cpf: string) => {
     let isValid = true;
     const errors: string[] = [];
     const invalidFields: { [key: string]: boolean } = {};
@@ -18,6 +20,12 @@ const validateForm = (name: string, email: string, phone: string ) => {
     if (phone.length < 10) {
         errors.push('Invalid phone number');
         invalidFields.phone = true;
+        isValid = false;
+    }
+
+    if (!cpfValidator(cpf)) {
+        errors.push('Invalid CPF');
+        invalidFields.cpf = true;
         isValid = false;
     }
 
