@@ -288,7 +288,7 @@ const ListReservationsDialog: React.FC<ReservationDialogProps> = ({ isOpen, onCl
                                 <label htmlFor="minimumTime">
                                     Minimum Time:
                                     <span>
-                                        in secounds
+                                        in minutes
                                     </span>
                                 </label>
                                 <input
