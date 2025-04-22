@@ -30,6 +30,13 @@ PenguBook is a full-stack application designed to manage user reservations. It c
 ### Update Own Information
 - Logged-in users can edit their personal information.
 
+## 🔐 Admin User for Testing
+
+Upon initialization, the project automatically creates an **admin user** for testing purposes.
+
+- **Username:** admin  
+- **Password:** 123
+
 ## Backend
 - **Language**: Java
 - **Framework**: Spring Boot
